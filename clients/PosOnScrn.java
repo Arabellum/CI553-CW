@@ -9,8 +9,8 @@ import java.awt.*;
  */
 class PosOnScrn
 {
-  private final static int clientW = 400;
-  private final static int clientH = 300;
+  private final static int clientW = 800; //Doubled resolution for modern day monitors
+  private final static int clientH = 600;
   
   private static final int maxX;  // Width of screen
   private static final int maxY;  // Height of screen

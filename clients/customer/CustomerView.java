@@ -24,9 +24,10 @@ public class CustomerView implements Observer
     public static final String CHECK  = "Check";
     public static final String CLEAR  = "Clear";
   }
-
-  private static final int H = 300;       // Height of window pixels
-  private static final int W = 400;       // Width  of window pixels
+  
+  Font font = new Font("Arial", Font.PLAIN, 16);
+  private static final int H = 600;       // Height of window pixels
+  private static final int W = 800;       // Width  of window pixels
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
@@ -62,7 +63,7 @@ public class CustomerView implements Observer
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
 
-    Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
+    Font font = new Font("Arial", Font.PLAIN, 16);
 
     theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check button
     theBtCheck.addActionListener(                   // Call back code
@@ -74,17 +75,18 @@ public class CustomerView implements Observer
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
 
-    theAction.setBounds( 110, 25 , 270, 20 );       // Message area
+    theAction.setBounds( 110, 50, 270, 20 );       // Message area
     theAction.setText( "" );                        //  Blank
     cp.add( theAction );                            //  Add to canvas
 
-    theInput.setBounds( 110, 50, 270, 40 );         // Product no area
-    theInput.setText("");                           // Blank
+    theInput.setBounds( 110, 25+60*0, 270, 40 );         // Product no area
+    theInput.setText(""); 							// Blank
+    theInput.setFont( font );
     cp.add( theInput );                             //  Add to canvas
     
-    theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
+    theSP.setBounds( 110, 25+60*1, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( font );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
 
@@ -93,7 +95,16 @@ public class CustomerView implements Observer
     thePicture.clear();
     
     rootWindow.setVisible( true );                  // Make visible);
-    theInput.requestFocus();                        // Focus is here
+    theInput.requestFocus();    					// Focus is here
+    
+    theBtClear.setBackground(Color.BLACK);
+    theBtClear.setForeground(Color.YELLOW);
+    theBtCheck.setBackground(Color.BLACK);
+    theBtCheck.setForeground(Color.YELLOW);
+    theInput.setBackground(Color.BLACK);
+    theInput.setForeground(Color.YELLOW);
+    theOutput.setBackground(Color.BLACK);
+    theOutput.setForeground(Color.YELLOW);
   }
 
    /**
@@ -117,15 +128,32 @@ public class CustomerView implements Observer
     CustomerModel model  = (CustomerModel) modelC;
     String        message = (String) arg;
     theAction.setText( message );
-    ImageIcon image = model.getPicture();  // Image of product
-    if ( image == null )
+    
+    //Changing "image" to "productImage" to avoid conflicts
+    ImageIcon productImage = model.getPicture();  // Image of product
+    if ( productImage == null )
     {
       thePicture.clear();                  // Clear picture
     } else {
-      thePicture.set( image );             // Display picture
+      thePicture.set( productImage );             // Display picture
     }
     theOutput.setText( model.getBasket().getDetails() );
     theInput.requestFocus();               // Focus is here
+    
+ // Again, using "invokeLater" to thread-safe the swing operations.
+    SwingUtilities.invokeLater(() -> {
+        theAction.setText(message);
+        ImageIcon image = model.getPicture();
+        if (image == null) {
+            thePicture.clear();
+        } else {
+            thePicture.set(image);
+        }
+        theOutput.setText(model.getBasket().getDetails());
+        theInput.requestFocus();
+       
+    });
+
   }
 
 }

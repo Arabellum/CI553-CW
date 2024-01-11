@@ -31,11 +31,11 @@ public class Basket extends ArrayList<Product> implements Serializable
   /**
    * Set the customers unique order number
    * Valid order Numbers 1 .. N
-   * @param anOrderNum A unique order number
+   * @param newONum A unique order number
    */
-  public void setOrderNum( int anOrderNum )
+  public void setOrderNum( int newONum )
   {
-    theOrderNum = anOrderNum;
+    theOrderNum = newONum;
   }
 
   /**

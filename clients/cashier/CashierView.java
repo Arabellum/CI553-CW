@@ -17,8 +17,9 @@ import java.util.Observer;
  */
 public class CashierView implements Observer
 {
-  private static final int H = 300;       // Height of window pixels
-  private static final int W = 400;       // Width  of window pixels
+  Font font = new Font("Arial", Font.PLAIN, 16);
+  private static final int H = 600;       // Height of window pixels
+  private static final int W = 800;       // Width  of window pixels
   
   private static final String CHECK  = "Check";
   private static final String BUY    = "Buy";
@@ -60,7 +61,6 @@ public class CashierView implements Observer
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
 
-    Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
 
     theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check Button
     theBtCheck.addActionListener(                   // Call back code
@@ -72,26 +72,40 @@ public class CashierView implements Observer
       e -> cont.doBuy() );
     cp.add( theBtBuy );                             //  Add to canvas
 
-    theBtBought.setBounds( 16, 25+60*3, 80, 40 );   // Clear Button
+    theBtBought.setBounds( 16, 25+60*2, 80, 40 );   // Clear Button
     theBtBought.addActionListener(                  // Call back code
       e -> cont.doBought() );
     cp.add( theBtBought );                          //  Add to canvas
 
-    theAction.setBounds( 110, 25 , 270, 20 );       // Message area
+    theAction.setBounds( 110, 0 , 270, 20 );       // Message area
     theAction.setText( "" );                        // Blank
     cp.add( theAction );                            //  Add to canvas
 
-    theInput.setBounds( 110, 50, 270, 40 );         // Input Area
-    theInput.setText("");                           // Blank
+    theInput.setBounds( 110, 25+60*0, 270, 40 );         // Input Area
+    theInput.setText("");  							// Blank
+    theInput.setFont( font ); 
     cp.add( theInput );                             //  Add to canvas
 
-    theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
+    theSP.setBounds( 110, 25+60*1, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( font );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
     rootWindow.setVisible( true );                  // Make visible
     theInput.requestFocus();                        // Focus is here
+    
+    theBtCheck.setBackground(Color.BLACK);
+    theBtCheck.setForeground(Color.YELLOW);
+    theBtBuy.setBackground(Color.BLACK);
+    theBtBuy.setForeground(Color.YELLOW);
+    theBtBought.setBackground(Color.BLACK);
+    theBtBought.setForeground(Color.YELLOW);
+    theAction.setBackground(Color.BLACK);
+    theAction.setForeground(Color.BLACK);
+    theInput.setBackground(Color.BLACK);
+    theInput.setForeground(Color.YELLOW);
+    theOutput.setBackground(Color.BLACK);
+    theOutput.setForeground(Color.YELLOW);
   }
 
   /**
@@ -117,7 +131,7 @@ public class CashierView implements Observer
     theAction.setText( message );
     Basket basket = model.getBasket();
     if ( basket == null )
-      theOutput.setText( "Customers order" );
+      theOutput.setText( "" );
     else
       theOutput.setText( basket.getDetails() );
     

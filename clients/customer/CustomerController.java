@@ -4,6 +4,7 @@ package clients.customer;
  * The Customer Controller
  * @author M A Smith (c) June 2014
  */
+import javax.swing.*;
 
 public class CustomerController
 {
@@ -25,19 +26,23 @@ public class CustomerController
    * Check interaction from view
    * @param pn The product number to be checked
    */
-  public void doCheck( String pn )
-  {
-    model.doCheck(pn);
+  public void doCheck(String pn) {
+      SwingUtilities.invokeLater(() -> {
+      model.doCheck(pn);
+      });
   }
 
   /**
    * Clear interaction from view
    */
-  public void doClear()
-  {
-    model.doClear();
+  public void doClear() {
+	  SwingUtilities.invokeLater(() -> {
+      model.doClear();
+      });
   }
 
-  
 }
+
+  
+
 

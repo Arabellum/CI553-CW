@@ -16,12 +16,13 @@ import java.util.Observer;
 
 public class BackDoorView implements Observer
 {
+  Font font = new Font("Arial", Font.PLAIN, 16);
   private static final String RESTOCK  = "Add";
   private static final String CLEAR    = "Clear";
   private static final String QUERY    = "Query";
  
-  private static final int H = 300;       // Height of window pixels
-  private static final int W = 400;       // Width  of window pixels
+  private static final int H = 600;       // Height of window pixels
+  private static final int W = 800;       // Width  of window pixels
 
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
@@ -57,7 +58,6 @@ public class BackDoorView implements Observer
     rootWindow.setSize( W, H );                     // Size of Window
     rootWindow.setLocation( x, y );
     
-    Font f = new Font("Monospaced",Font.PLAIN,12);  // Font f is
 
     theBtQuery.setBounds( 16, 25+60*0, 80, 40 );    // Buy button 
     theBtQuery.addActionListener(                   // Call back code
@@ -76,25 +76,41 @@ public class BackDoorView implements Observer
     cp.add( theBtClear );                           //  Add to canvas
 
  
-    theAction.setBounds( 110, 25 , 270, 20 );       // Message area
+    theAction.setBounds( 110, 0 , 270, 20 );       // Message area
     theAction.setText( "" );                        // Blank
     cp.add( theAction );                            //  Add to canvas
 
-    theInput.setBounds( 110, 50, 120, 40 );         // Input Area
+    theInput.setBounds( 110, 25+60*0, 120, 40 );    // Input Area
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
     
-    theInputNo.setBounds( 260, 50, 120, 40 );       // Input Area
-    theInputNo.setText("0");                        // 0
+    theInputNo.setBounds( 260, 25+60*0, 120, 40 );       // Input Area
+    theInputNo.setText("0");  
+    theInput.setFont( font ); 
     cp.add( theInputNo );                           //  Add to canvas
 
-    theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
+    theSP.setBounds( 110, 25+60*1, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
-    theOutput.setFont( f );                         //  Uses font  
+    theOutput.setFont( font );                         //  Uses font  
     cp.add( theSP );                                //  Add to canvas
     theSP.getViewport().add( theOutput );           //  In TextArea
     rootWindow.setVisible( true );                  // Make visible
     theInput.requestFocus();                        // Focus is here
+    
+    theBtClear.setBackground(Color.BLACK);
+    theBtClear.setForeground(Color.YELLOW);
+    theInputNo.setBackground(Color.BLACK);
+    theInputNo.setForeground(Color.YELLOW);
+    theBtQuery.setBackground(Color.BLACK);
+    theBtQuery.setForeground(Color.YELLOW);
+    theAction.setBackground(Color.BLACK);
+    theAction.setForeground(Color.BLACK);
+    theBtRStock.setBackground(Color.BLACK);
+    theBtRStock.setForeground(Color.YELLOW);
+    theInput.setBackground(Color.BLACK);
+    theInput.setForeground(Color.YELLOW);
+    theOutput.setBackground(Color.BLACK);
+    theOutput.setForeground(Color.YELLOW);
   }
   
   public void setController( BackDoorController c )
